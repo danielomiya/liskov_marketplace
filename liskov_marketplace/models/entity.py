@@ -18,4 +18,4 @@ class Entity(metaclass=ABCMeta):
         Returns:
             dict: this instance's representation as dict
         """
-        raise NotImplementedError()
+        raise NotImplementedError("Override me")
