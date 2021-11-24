@@ -15,6 +15,7 @@ class User(Entity):
     cpf_cnpj: str = None
     email: str = None
     phone: str = None
+    password: bytes = None
 
     def as_dict(self) -> dict:
         """
