@@ -36,3 +36,8 @@ def create_user() -> Response:
     user = User(**{key: func(body[key]) for key, func in keys.items()})
     users_repository.add(user)
     return user.as_dict(), HTTPStatus.CREATED
+
+
+@bp.post("/api/users/token")
+def get_token() -> Response:
+    pass
