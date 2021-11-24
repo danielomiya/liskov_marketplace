@@ -17,6 +17,12 @@ users_repository: BaseRepository[User] = InMemoryRepository()
 
 @bp.post("/api/users")
 def create_user() -> Response:
+    """
+    Creates an user
+
+    Returns:
+        Response: the user itself in case of success or error
+    """
     body = request.get_json() or {}
     keys = {
         "name": identity,
@@ -40,6 +46,12 @@ def create_user() -> Response:
 
 @bp.post("/api/users/token")
 def get_token() -> Response:
+    """
+    Given the email and password, authenticates an user
+
+    Returns:
+        Response: detailed message whether auth has been successful or not
+    """
     body = request.get_json() or {}
     keys = {
         "email": str.lower,
