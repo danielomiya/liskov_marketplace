@@ -26,7 +26,7 @@ class User(Entity):
         return {
             "id": self.id,
             "name": self.name,
-            "birth_date": self.birth_date.isoformat("T"),
+            "birth_date": self.birth_date.strftime("%Y-%m-%d"),
             "cpf_cnpj": self.cpf_cnpj,
             "email": self.email,
             "phone": self.phone,
