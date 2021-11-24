@@ -8,6 +8,7 @@ from liskov_marketplace.repositories.base_repository import BaseRepository
 from liskov_marketplace.repositories.in_memory_repository import InMemoryRepository
 from liskov_marketplace.typing import Response
 from liskov_marketplace.utils.functions import identity
+from liskov_marketplace.utils.hash import sha256
 from liskov_marketplace.utils.http_error import create_error
 
 bp = Blueprint("users", __name__)
@@ -23,6 +24,7 @@ def create_user() -> Response:
         "cpf_cnpj": identity,
         "email": identity,
         "phone": identity,
+        "password": sha256,
     }
 
     if any(key not in body for key in keys):
