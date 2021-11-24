@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 from liskov_marketplace.models.entity import Entity
 
@@ -9,7 +10,11 @@ class User(Entity):
     User entity model
     """
 
-    balance: float = 0.0
+    name: str = None
+    birth_date: datetime = None
+    cpf_cnpj: str = None
+    email: str = None
+    phone: str = None
 
     def as_dict(self) -> dict:
         """
@@ -20,4 +25,9 @@ class User(Entity):
         """
         return {
             "id": self.id,
+            "name": self.name,
+            "birth_date": self.birth_date.isoformat("T"),
+            "cpf_cnpj": self.cpf_cnpj,
+            "email": self.email,
+            "phone": self.phone,
         }
