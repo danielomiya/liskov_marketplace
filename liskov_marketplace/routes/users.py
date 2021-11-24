@@ -22,7 +22,7 @@ def create_user() -> Response:
         "name": identity,
         "birth_date": lambda d: datetime.strptime(d, "%Y-%m-%d"),
         "cpf_cnpj": identity,
-        "email": identity,
+        "email": str.lower,
         "phone": identity,
         "password": sha256,
     }
@@ -40,4 +40,30 @@ def create_user() -> Response:
 
 @bp.post("/api/users/token")
 def get_token() -> Response:
-    pass
+    body = request.get_json() or {}
+    keys = {
+        "email": str.lower,
+        "password": sha256,
+    }
+
+    if any(key not in body for key in keys):
+        return create_error(
+            f"not all required fields found in body, expected: {', '.join(keys)}",
+            HTTPStatus.BAD_REQUEST,
+        )
+
+    params = {key: func(body[key]) for key, func in keys.items()}
+    matched = filter(
+        lambda user: user.email == params["email"]
+        and user.password == params["password"],
+        users_repository.items.values(),
+    )
+
+    user = next(matched, None)
+    if not user:
+        return create_error(
+            "could not authenticate user, wrong email or password",
+            HTTPStatus.FORBIDDEN,
+        )
+
+    return {"message": f"logged in as '{user.name}'"}, HTTPStatus.OK
