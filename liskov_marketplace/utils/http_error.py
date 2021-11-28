@@ -1,10 +1,10 @@
 from http import HTTPStatus
 from typing import Union
 
-from liskov_marketplace.typing import JsonObject
+from liskov_marketplace.typing import Response
 
 
-def create_error(message: str, status_code: Union[HTTPStatus, int]) -> JsonObject:
+def create_error(message: str, status_code: Union[HTTPStatus, int]) -> Response:
     """
     Creates an error response
 
